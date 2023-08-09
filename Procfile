@@ -1,0 +1,1 @@
+web: gunicorn queuekz.wsgi --log-file -
