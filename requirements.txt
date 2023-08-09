@@ -3,6 +3,7 @@ Django==4.2.4
 django-phonenumber-field==7.1.0
 django-phonenumbers==1.0.1
 djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
 gunicorn==21.2.0
 packaging==23.1
 phonenumbers==8.13.18
