@@ -19,6 +19,27 @@ def create_appeal(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def get_appeal(request):
+    user = request.user
+    appeal = Appeal.objects.filter(user=user, is_completed=False).order_by("-id").first()
+    return Response({"status": appeal.status.value}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_appeal_status(request):
+    user = request.user
+    if user.role == User.Names.CLIENT:
+        return Response({'message': 'You are not authorized to create this type of appeal'},
+                        status=status.HTTP_403_FORBIDDEN)
+    appeal = Appeal.objects.filter(is_completed=False).last()
+    appeal.status = Appeal.Statuses.COME_IN
+    appeal.save()
+    return Response({'message': 'Appeal status successfully updated'}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def rector_clients(request):
     user = request.user
 
